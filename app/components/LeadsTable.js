@@ -1,10 +1,14 @@
 import React from "react";
 import ReactTable from "react-table";
 import Moment from "react-moment";
-import EditTable from "./EditTable";
 import styled from "styled-components";
-import { Message } from "../components/Message";
 import NumberFormat from "react-number-format";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getLeads } from "../actions/leadsActions";
+
+import Message from "./form_partials/Message";
+import EditTable from "./edit";
 
 const Status = styled.div`
   width: 6px;
@@ -27,7 +31,13 @@ const HasBeenContacted = styled.div`
 `;
 
 class LeadsTable extends React.Component {
+  componentDidMount() {
+    this.props.getLeads(this.props.table);
+  }
+
   render() {
+    const { leads, loading } = this.props;
+
     const columns = [
       {
         Header: "ID",
@@ -38,12 +48,6 @@ class LeadsTable extends React.Component {
         Header: "Name",
         accessor: "name",
         style: { textTransform: "capitalize" },
-        // Cell: row => (
-        //   <span>
-        //     <Status />
-        //     {row.value}
-        //   </span>
-        // ),
         maxWidth: 200
       },
       {
@@ -96,7 +100,8 @@ class LeadsTable extends React.Component {
 
     return (
       <ReactTable
-        data={this.props.leads}
+        loading={loading}
+        data={leads}
         columns={columns}
         showPaginationTop={true}
         SubComponent={row => <Message data={row.original} />}
@@ -106,4 +111,17 @@ class LeadsTable extends React.Component {
   }
 }
 
-export default LeadsTable;
+LeadsTable.propTypes = {
+  leads: PropTypes.array,
+  loading: PropTypes.bool
+};
+
+const mapStateToProps = state => ({
+  leads: state.leads.leads,
+  loading: state.leads.loading
+});
+
+export default connect(
+  mapStateToProps,
+  { getLeads }
+)(LeadsTable);

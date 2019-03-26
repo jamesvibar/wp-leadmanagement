@@ -1,50 +1,53 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { connect } from "react-redux";
-import { getLeads } from "../actions/leadsActions";
-
-// import ProfitField from "../components/ProfitField";
-// import "react-table/react-table.css";
-
+import { getTables } from "../actions/settingsActions";
 import LeadsTable from "../components/LeadsTable";
 
 class Leads extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      leads: []
-    };
   }
 
   componentDidMount() {
-    // Get all leads from redux
-    this.props.getLeads();
+    this.props.getTables();
   }
 
   render() {
-    const { leads } = this.props;
+    const { tables } = this.props;
 
     return (
       <div className="wrap">
         <h1>Lead Management</h1>
+        <Tabs>
+          <TabList>
+            {tables.map(table => (
+              <Tab>{table.table_name}</Tab>
+            ))}
+          </TabList>
 
-        <LeadsTable leads={leads} />
+          {tables.map(table => (
+            <TabPanel>
+              <LeadsTable table={table.table_name} />
+            </TabPanel>
+          ))}
+        </Tabs>
       </div>
     );
   }
 }
 
 Leads.propTypes = {
-  getLeads: PropTypes.func.isRequired,
+  getTables: PropTypes.func.isRequired,
   leads: PropTypes.array
 };
 
 const mapStateToProps = state => ({
-  leads: state.leads.leads
+  tables: state.settings.tables
 });
 
 export default connect(
   mapStateToProps,
-  { getLeads }
+  { getTables }
 )(Leads);

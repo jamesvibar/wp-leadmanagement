@@ -1,156 +1,44 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import fetchWP from "../utils/fetchWP";
+import styled from "styled-components";
+import { connect } from "react-redux";
+import { getTables } from "../actions/settingsActions";
 
-import Notice from "../components/Notice";
-
-export default class Admin extends Component {
+class Admin extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
-      savedEmail: "",
-      notice: false
+      table_name: ""
     };
-
-    this.fetchWP = new fetchWP({
-      restURL: this.props.wpObject.api_url,
-      restNonce: this.props.wpObject.api_nonce
-    });
-
-    this.getSetting();
   }
 
-  getSetting = () => {
-    this.fetchWP.get("admin").then(
-      json =>
-        this.setState({
-          email: json.value,
-          savedEmail: json.value
-        }),
-      err => console.log("error", err)
-    );
-  };
-
-  updateSetting = () => {
-    this.fetchWP.post("admin", { email: this.state.email }).then(
-      json => this.processOkResponse(json, "saved"),
-      err =>
-        this.setState({
-          notice: {
-            type: "error",
-            message: err.message
-          }
-        })
-    );
-  };
-
-  deleteSetting = () => {
-    this.fetchWP
-      .delete("admin")
-      .then(
-        json => this.processOkResponse(json, "deleted"),
-        err => console.log("error", err)
-      );
-  };
-
-  processOkResponse = (json, method) => {
-    if (json.success) {
-      this.setState({
-        email: json.value,
-        savedEmail: json.value,
-        notice: {
-          type: "success",
-          message: `Setting ${method} successfully.`
-        }
-      });
-    } else {
-      this.setState({
-        notice: {
-          type: "error",
-          message: `Setting was not ${method}.`
-        }
-      });
-    }
-  };
-
-  updateInput = event => {
-    this.setState({
-      email: event.target.value
-    });
-  };
-
-  handleSave = event => {
-    event.preventDefault();
-    if (this.state.email === this.state.savedEmail) {
-      this.setState({
-        notice: {
-          type: "error",
-          message: `Setting unchanged.`
-        }
-      });
-    } else {
-      this.updateSetting();
-    }
-  };
-
-  handleDelete = event => {
-    event.preventDefault();
-    this.deleteSetting();
-  };
-
-  clearNotice = () => {
-    this.setState({
-      notice: false
-    });
-  };
+  componentDidMount() {
+    this.props.getTables();
+  }
 
   render() {
-    let notice;
-
-    if (this.state.notice) {
-      notice = (
-        <Notice notice={this.state.notice} onDismissClick={this.clearNotice} />
-      );
-    }
-
+    const { tables } = this.props;
     return (
       <div className="wrap">
-        {notice}
         <form>
           <h1>Lead Management Settings</h1>
-
-          <label>
-            Author Email:
-            <input
-              type="text"
-              value={this.state.email}
-              onChange={this.updateInput}
-            />
-          </label>
-
-          <button
-            id="save"
-            className="button button-primary"
-            onClick={this.handleSave}
-          >
-            Save
-          </button>
-
-          <button
-            id="delete"
-            className="button button-primary"
-            onClick={this.handleDelete}
-          >
-            Delete
-          </button>
+          <div>
+            {tables.map(table => (
+              <p>{table.table_name}</p>
+            ))}
+          </div>
         </form>
       </div>
     );
   }
 }
 
-Admin.propTypes = {
-  wpObject: PropTypes.object
-};
+const mapStateToProps = state => ({
+  tables: state.settings.tables
+});
+
+export default connect(
+  mapStateToProps,
+  { getTables }
+)(Admin);

@@ -8,7 +8,7 @@ const TextFieldContainer = styled.div`
   display: block;
 `;
 
-const TextFieldDate = ({ onChange, value, label }) => (
+const DateFieldGroup = ({ onChange, value, label }) => (
   <TextFieldContainer>
     <label htmlFor={name}>
       {label}
@@ -21,10 +21,9 @@ const TextFieldDate = ({ onChange, value, label }) => (
   </TextFieldContainer>
 );
 
-TextFieldDate.propTypes = {
+DateFieldGroup.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
   label: PropTypes.string
 };
 
-export default TextFieldDate;
+export default DateFieldGroup;

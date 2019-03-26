@@ -42,7 +42,7 @@ class Admin {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_screen_hook_suffix = null;
+	protected $plugin_screen_hook_suffix = 'admin';
 
 
 	/**
@@ -127,9 +127,9 @@ class Admin {
 		$screen = get_current_screen();
 		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
 
-			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', dirname( __FILE__ ) ), array( 'jquery' ), $this->version );
+			wp_enqueue_script( $this->plugin_slug . '-script', plugins_url( 'assets/js/admin.js', dirname( __FILE__ ) ), array( 'jquery' ), $this->version );
 
-			wp_localize_script( $this->plugin_slug . '-admin-script', 'wpr_object', array(
+			wp_localize_script( $this->plugin_slug . '-script', 'wpr_object', array(
 				'api_nonce'   => wp_create_nonce( 'wp_rest' ),
 				'api_url'	  => rest_url( $this->plugin_slug . '/v1/' ),
 				)
@@ -146,21 +146,20 @@ class Admin {
 		/*
 		 * Add a settings page for this plugin to the Settings menu.
 		 */
-		$this->plugin_screen_hook_suffix = add_options_page(
-			__( 'WPR Leads', $this->plugin_slug ), //PAGE TITLE
-			__( 'WPR Leads', $this->plugin_slug ), //MENU TITLE
-			'manage_options', //CAPABILITY
-			$this->plugin_slug, //MENU SLUG
+
+		// Leads Page
+		$this->plugin_screen_hook_suffix = add_submenu_page(
+			$this->plugin_slug,
+			__( 'Lead Settings', $this->plugin_slug ),
+			__( 'Lead Settings', $this->plugin_slug ),
+			'manage_options',
+			$this->plugin_slug . '-admin', //MENU SLUG
 			array( $this, 'display_plugin_admin_page' )
-			// 'dashicons-feedback',
-			// 2 // CALLBACK
 		);
 	}
 
 	/**
-	 * Render the settings page for this plugin.
-	 *
-	 * @since    1.0.0
+	 * Render the settings page.
 	 */
 	public function display_plugin_admin_page() {
 		?><div id="wp-reactivate-admin"></div><?php
@@ -174,7 +173,7 @@ class Admin {
 	public function add_action_links( $links ) {
 		return array_merge(
 			array(
-				'settings' => '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_slug ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>',
+				'settings' => '<a href="' . admin_url( 'admin.php?page=' . $this->plugin_slug . '-admin') . '">' . __( 'Settings', $this->plugin_slug ) . '</a>',
 			),
 			$links
 		);

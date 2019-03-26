@@ -42,7 +42,7 @@ class Leads {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_screen_hook_suffix = 'null';
+	protected $plugin_screen_hook_suffix = 'leads';
 
 
 	/**
@@ -92,7 +92,7 @@ class Leads {
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
 		// Add plugin action link point to settings page
-		// add_filter( 'plugin_action_links_' . $this->plugin_basename, array( $this, 'add_action_links' ) );
+		add_filter( 'plugin_action_links_' . $this->plugin_basename, array( $this, 'add_action_links' ) );
 	}
 
 	/**
@@ -147,22 +147,20 @@ class Leads {
 		 * Add a settings page for this plugin to the Settings menu.
 		 */
 		$this->plugin_screen_hook_suffix = add_menu_page(
-			__( 'Leads Management', $this->plugin_slug ), //PAGE TITLE
-			__( 'Leads Management', $this->plugin_slug ), //MENU TITLE
+			__( 'Lead Management', $this->plugin_slug ), //PAGE TITLE
+			__( 'Lead Management', $this->plugin_slug ), //MENU TITLE
 			'manage_options', //CAPABILITY
-			$this->plugin_slug . '-main', //MENU SLUG
-			array( $this, 'display_plugin_admin_page' ),
+			$this->plugin_slug, //MENU SLUG
+			array( $this, 'display_plugin_leads_page' ),
 			'dashicons-feedback',
-			2 // CALLBACK
+			2
 		);
 	}
 
 	/**
-	 * Render the settings page for this plugin.
-	 *
-	 * @since    1.0.0
+	 * Render the leads page
 	 */
-	public function display_plugin_admin_page() {
+	public function display_plugin_leads_page() {
 		?><div id="wp-reactivate-leads"></div><?php
 	}
 
@@ -174,7 +172,7 @@ class Leads {
 	public function add_action_links( $links ) {
 		return array_merge(
 			array(
-				'settings' => '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_slug ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>',
+				'leads' => '<a href="' . admin_url( 'admin.php?page=' . $this->plugin_slug ) . '">' . __( 'View Leads', $this->plugin_slug ) . '</a>',
 			),
 			$links
 		);

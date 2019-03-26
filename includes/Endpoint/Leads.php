@@ -76,12 +76,29 @@ class Leads {
          * Get all leads
          * GET           /wp-json/wpr-leads/v1/leads
          */
-        register_rest_route( $namespace, $endpoint, array(
+        // register_rest_route( $namespace, $endpoint, array(
+        //     array(
+        //         'methods'               => \WP_REST_Server::READABLE,
+        //         'callback'              => array( $this, 'get_leads' ),
+        //         // 'permission_callback'   => array( $this, 'admin_permissions_check' ),
+        //         'args'                  => array(),
+        //     ),
+        // ) );
+
+        /**
+         * Get all leads on a database
+         * GET           /wp-json/wpr-leads/v1/leads
+         */
+        register_rest_route( $namespace, $endpoint . '(?P<table_name>(.*)+)', array(
             array(
                 'methods'               => \WP_REST_Server::READABLE,
                 'callback'              => array( $this, 'get_leads' ),
                 // 'permission_callback'   => array( $this, 'admin_permissions_check' ),
-                'args'                  => array(),
+                'args'                  => array(
+                    'table_name' => [
+                        'required' => 'true'
+                    ]
+                ),
             ),
         ) );
 
@@ -182,7 +199,8 @@ class Leads {
     public function get_leads( $request ) {
         global $wpdb;
 
-        $query = "SELECT * FROM `wp_database_emails` order by `date_send` desc";
+        $table_name = $request->get_param('table_name');
+        $query = "SELECT * FROM `{$table_name}` order by `date_send` desc";
         $list = $wpdb->get_results($query);
 
         if (! $list ) {
@@ -190,11 +208,20 @@ class Leads {
         }
 
         return new \WP_REST_Response( $list, 200 );
-        // return new \WP_REST_Response( array(
-        //     'success' => true,
-        //     'payload' => $list
-        // ), 200 );
     }
+
+    // public function get_leads( $request ) {
+    //     global $wpdb;
+
+    //     $query = "SELECT * FROM `wp_database_emails` order by `date_send` desc";
+    //     $list = $wpdb->get_results($query);
+
+    //     if (! $list ) {
+    //       return new \WP_REST_Response( ["message" => "No leads found"], 404 );
+    //     }
+
+    //     return new \WP_REST_Response( $list, 200 );
+    // }
 
     /**
      * Get Single lead
@@ -223,8 +250,8 @@ class Leads {
      */
     public function update_lead( $request ) {
         global $wpdb;
-
         $id = esc_sql($request->get_param('id'));
+        
         $name = esc_sql($request->get_param('name'));
         $email = esc_sql($request->get_param('email'));
         $phone = esc_sql($request->get_param('phone'));

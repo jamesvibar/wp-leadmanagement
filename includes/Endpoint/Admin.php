@@ -72,112 +72,103 @@ class Admin {
         $namespace = $this->plugin_slug . '/v' . $version;
         $endpoint = '/admin/';
 
+        /**
+         * Endpoint for all lead_tables
+         */
         register_rest_route( $namespace, $endpoint, array(
             array(
                 'methods'               => \WP_REST_Server::READABLE,
-                'callback'              => array( $this, 'get_author_email' ),
+                'callback'              => array( $this, 'get_tables' ),
                 // 'permission_callback'   => array( $this, 'admin_permissions_check' ),
                 'args'                  => array(),
             ),
         ) );
 
+        /**
+         * Endpoint for adding a lead_tables
+         */
         register_rest_route( $namespace, $endpoint, array(
             array(
                 'methods'               => \WP_REST_Server::CREATABLE,
-                'callback'              => array( $this, 'update_author_email' ),
-                'permission_callback'   => array( $this, 'admin_permissions_check' ),
-                'args'                  => array( //Expected parameters for this request
-                    'email' => array(
-                        'required' => true,
-                        'type' => 'string',
-                        'description' => 'The admin\'s  email address',
-                        'format' => 'email',
-                        'validate_callback' => function( $param, $request, $key ) { return !empty($param); } //Prevent submission of empty field
-                    ),
-                ),
-            ),
-        ) );
-
-        register_rest_route( $namespace, $endpoint, array(
-            array(
-                'methods'               => \WP_REST_Server::EDITABLE,
-                'callback'              => array( $this, 'update_author_email' ),
-                'permission_callback'   => array( $this, 'admin_permissions_check' ),
+                'callback'              => array( $this, 'add_table' ),
+                // 'permission_callback'   => array( $this, 'admin_permissions_check' ),
                 'args'                  => array(
-                    'email' => array(
+                    'table_name' => [
                         'required' => true,
                         'type' => 'string',
-                        'description' => 'The admin\'s  email address',
-                        'format' => 'email',
-                        'validate_callback' => function( $param, $request, $key ) { return !empty($param); } //Prevent submission of empty field
-                    ),
+                        'validate_callback' => function( $param, $request, $key ) { return !empty($param); }
+                    ]
                 ),
             ),
         ) );
 
-        register_rest_route( $namespace, $endpoint, array(
-            array(
-                'methods'               => \WP_REST_Server::DELETABLE,
-                'callback'              => array( $this, 'delete_author_email' ),
-                'permission_callback'   => array( $this, 'admin_permissions_check' ),
-                'args'                  => array(),
-            ),
-        ) );
 
     }
 
     /**
-     * Get Example
+     * Get all Tables
      *
      * @param WP_REST_Request $request Full data about the request.
      * @return WP_Error|WP_REST_Request
      */
-    public function get_author_email( $request ) {
-        $example_option = get_option( 'wpr_author_email' );
+    public function get_tables( $request ) {
+        global $wpdb;
 
-        // Don't return false if there is no option
-        if ( ! $example_option ) {
-            return new \WP_REST_Response( array(
-                'success' => true,
-                'value' => ''
-            ), 200 );
+        $query = "SELECT * FROM `wp_wpr_leads_tables`";
+        $list = $wpdb->get_results($query);
+
+        if (! $list ) {
+          return new \WP_REST_Response( ["message" => "No tables found"], 404 );
         }
 
-        return new \WP_REST_Response( array(
-            'success' => true,
-            'value' => $example_option
-        ), 200 );
+        return new \WP_REST_Response( $list, 200 );
     }
 
-    /**
-     * Create OR Update Example
-     *
-     * @param WP_REST_Request $request Full data about the request. //askdnsakldnk
-     * @return WP_Error|WP_REST_Request
-     */
-    public function update_author_email( $request ) {
-        $updated = update_option( 'wpr_author_email', $request->get_param( 'email' ) );
+    public function add_table( $request ) {
+        global $wpdb;
 
-        return new \WP_REST_Response( array(
-            'success'   => $updated,
-            'value'     => $request->get_param( 'email' )
-        ), 200 );
+        $table_name = esc_sql($request->get_param('table_name'));
+
+        $inserted = $wpdb->query( $wpdb->prepare(
+            "INSERT INTO `wp_wpr_leads_tables` (table_name) VALUES (%s)", $table_name
+        ) );
+
+        if (! $inserted ) {
+          return new \WP_REST_Response( ["message" => "Cannot add table"], 404 );
+        }
+
+        return new \WP_REST_Response( $inserted, 200 );
     }
 
-    /**
-     * Delete Example
-     *
-     * @param WP_REST_Request $request Full data about the request.
-     * @return WP_Error|WP_REST_Request
-     */
-    public function delete_author_email( $request ) {
-        $deleted = delete_option( 'wpr_author_email' );
+    // /**
+    //  * Create OR Update Example
+    //  *
+    //  * @param WP_REST_Request $request Full data about the request. //askdnsakldnk
+    //  * @return WP_Error|WP_REST_Request
+    //  */
+    // public function update_author_email( $request ) {
+    //     $updated = update_option( 'wpr_author_email', $request->get_param( 'email' ) );
 
-        return new \WP_REST_Response( array(
-            'success'   => $deleted,
-            'value'     => ''
-        ), 200 );
-    }
+    //     return new \WP_REST_Response( array(
+    //         'success'   => $updated,
+    //         'value'     => $request->get_param( 'email' )
+    //     ), 200 );
+    // }
+
+    // /**
+    //  * Delete Example
+    //  *
+    //  * @param WP_REST_Request $request Full data about the request.
+    //  * @return WP_Error|WP_REST_Request
+    //  */
+    // public function delete_author_email( $request ) {
+    //     $deleted = delete_option( 'wpr_author_email' );
+
+    //     return new \WP_REST_Response( array(
+    //         'success'   => $deleted,
+    //         'value'     => ''
+    //     ), 200 );
+    // }
 
     /**
      * Check if a given request has access to update a setting

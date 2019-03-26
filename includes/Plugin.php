@@ -74,7 +74,19 @@ class Plugin {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-		add_option( 'wpr_author_email' );
+		global $table_prefix, $wpdb;
+
+		/**
+		 * Create table for leads_tables if it doesnt exist.
+		 */
+		$wpr_leads_tables = $table_prefix . "wpr_leads_tables";
+		if($wpdb->get_var( "show tables like '$wpr_leads_tables'" ) != $wpr_leads_tables) 
+		{
+			$sql = "CREATE TABLE `{$wpr_leads_tables}` (`id` int(11) NOT NULL auto_increment, `table_name` varchar(32) NOT NULL, PRIMARY KEY (id) ); ";
+				require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
+				dbDelta($sql);
+		}
+
 	}
 
 	/**

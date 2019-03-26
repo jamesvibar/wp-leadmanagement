@@ -10,7 +10,7 @@
  * @copyright 2019 James
  *
  * @wordpress-plugin
- * Plugin Name:       WPR Leads
+ * Plugin Name:       Lead Management
  * Plugin URI:        https://jamesvibar.com
  * Description:       React boilerplate for WordPress plugins
  * Version:           1.0.2
@@ -78,8 +78,8 @@ spl_autoload_register(function ($class) {
 function init() {
 	$wpr = Plugin::get_instance();
 	$wpr_shortcode = Shortcode::get_instance();
-	$wpr_admin = Admin::get_instance();
 	$wpr_leads = Leads::get_instance();
+	$wpr_admin = Admin::get_instance();
 	$wpr_rest_admin = Endpoint\Admin::get_instance();
 	$wpr_rest_leads = Endpoint\Leads::get_instance();
 }

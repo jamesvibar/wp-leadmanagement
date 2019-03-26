@@ -10,7 +10,7 @@ const Container = styled.div`
   border-radius: 5px;
 `;
 
-export const Message = ({ data }) => {
+const Message = ({ data }) => {
   const { message, name, phone, source } = data;
   return (
     <Container>
@@ -26,3 +26,5 @@ export const Message = ({ data }) => {
 Message.propTypes = {
   data: PropTypes.object.isRequired
 };
+
+export default Message;

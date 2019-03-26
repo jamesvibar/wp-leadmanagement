@@ -2,8 +2,9 @@ import { GET_LEADS, GET_LEAD, LEADS_LOADING, UPDATE_LEAD } from "./types";
 import axios from "axios";
 import { wordpress } from "../config/wordpress";
 
-export const getLeads = () => dispatch => {
-  axios.get(`${wordpress.api_url}/leads`).then(res => {
+export const getLeads = table_name => dispatch => {
+  dispatch(setLeadsLoading());
+  axios.get(`${wordpress.api_url}/leads/${table_name}`).then(res => {
     dispatch({
       type: GET_LEADS,
       payload: res.data
