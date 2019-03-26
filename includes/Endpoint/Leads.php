@@ -89,7 +89,7 @@ class Leads {
          * Get all leads on a database
          * GET           /wp-json/wpr-leads/v1/leads
          */
-        register_rest_route( $namespace, $endpoint . '(?P<table_name>(.*)+)', array(
+        register_rest_route( $namespace, $endpoint . '(?P<table_name>[a-zA-Z0-9-_]+)', array(
             array(
                 'methods'               => \WP_REST_Server::READABLE,
                 'callback'              => array( $this, 'get_leads' ),
@@ -106,13 +106,16 @@ class Leads {
          * Get single lead
          * GET           /wp-json/wpr-leads/v1/leads/:id
          */
-        register_rest_route( $namespace, $endpoint . '(?P<id>(.*)+)', array(
+        register_rest_route( $namespace, $endpoint . '(?P<table_name>[a-zA-Z0-9-_]+)/(?P<id>\d+)', array(
             array(
                 'methods'               => \WP_REST_Server::READABLE,
                 'callback'              => array( $this, 'get_lead' ),
                 // 'permission_callback'   => array( $this, 'admin_permissions_check' ),
                 'args'                  => array(
                     'id' => [
+                        'required' => 'true'
+                    ],
+                    'table_name' => [
                         'required' => 'true'
                     ]
                 ),
@@ -232,7 +235,7 @@ class Leads {
     public function get_lead( $request ) {
         global $wpdb;
 
-        $query = "SELECT * FROM `wp_database_emails` WHERE id={$request->get_param('id')}";
+        $query = "SELECT * FROM `{$request->get_param('table_name')}` WHERE id={$request->get_param('id')}";
         $list = $wpdb->get_results($query);
 
         if (! $list ) {
