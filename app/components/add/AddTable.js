@@ -87,7 +87,11 @@ class AddTable extends React.Component {
           open={isFormOpen}
           onClose={this.closeModal}
           modal
-          contentStyle={{ maxWidth: "500px", borderRadius: "5px" }}
+          contentStyle={{
+            maxWidth: "500px",
+            borderRadius: "5px",
+            border: "none"
+          }}
         >
           <ContentContainer>
             <h1 style={{ margin: "0 0 0.25em" }}>Creating new lead</h1>
@@ -136,6 +140,7 @@ class AddTable extends React.Component {
                     value={name}
                     onChange={this.onInputChange}
                     placeholder="Input name"
+                    required
                   />
                   <TextFieldGroup
                     type="email"
@@ -144,6 +149,7 @@ class AddTable extends React.Component {
                     value={email}
                     onChange={this.onInputChange}
                     placeholder="Input email address"
+                    required
                   />
                   <TextFieldGroup
                     name="phone"
@@ -151,11 +157,13 @@ class AddTable extends React.Component {
                     value={phone}
                     onChange={this.onInputChange}
                     placeholder="Input contact number"
+                    required
                   />
                   <DateFieldGroup
                     value={date_send}
                     label="Date Sent"
                     onChange={this.onDateChange}
+                    required
                   />
                   <TextFieldGroup
                     name="source"
@@ -172,6 +180,7 @@ class AddTable extends React.Component {
                     value={message}
                     onChange={this.onInputChange}
                     placeholder="Input message"
+                    required
                   />
                 </TabPanel>
               </Tabs>

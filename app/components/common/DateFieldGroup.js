@@ -8,10 +8,18 @@ const TextFieldContainer = styled.div`
   display: block;
 `;
 
-const DateFieldGroup = ({ onChange, value, label, disabled }) => (
+const TextRequired = styled.span`
+  font-size 10px;
+  color: red;
+  text-transform: lowercase;
+  margin-left: 5px;
+`;
+
+const DateFieldGroup = ({ onChange, value, label, disabled, required }) => (
   <TextFieldContainer>
     <label htmlFor={name}>
       {label}
+      {required ? <TextRequired>*required</TextRequired> : ""}
       <DatePicker
         selected={value}
         onChange={onChange}
@@ -28,7 +36,8 @@ DateFieldGroup.defaultProps = {
 
 DateFieldGroup.propTypes = {
   onChange: PropTypes.func.isRequired,
-  label: PropTypes.string
+  label: PropTypes.string,
+  required: PropTypes.bool
 };
 
 export default DateFieldGroup;

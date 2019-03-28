@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
   ReactDOM.render(
     <Provider store={store}>
       <Admin />
+      <h1>Settings Page: (Not available yet)</h1>
     </Provider>,
     document.getElementById("wp-reactivate-admin")
   );

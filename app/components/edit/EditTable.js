@@ -53,7 +53,8 @@ class EditTable extends React.Component {
       form_type_id,
       lead_source,
       has_been_contacted,
-      profit
+      profit,
+      manual_add
     } = this.state;
 
     const updatedLead = {
@@ -69,7 +70,8 @@ class EditTable extends React.Component {
       lead_source,
       has_been_contacted,
       profit,
-      last_edit: new Date().toISOString()
+      last_edit: new Date().toISOString(),
+      manual_add
     };
 
     this.props.updateLead(updatedLead, toast);
@@ -108,7 +110,11 @@ class EditTable extends React.Component {
         trigger={<EditButton>Edit</EditButton>}
         modal
         closeOnDocumentClick
-        contentStyle={{ maxWidth: "500px" }}
+        contentStyle={{
+          maxWidth: "500px",
+          borderRadius: "5px",
+          border: "none"
+        }}
         // onOpen={() => this.loadLead(id)}
       >
         <ContentContainer>
@@ -157,7 +163,8 @@ class EditTable extends React.Component {
                   ""
                 ) : (
                   <FormWarning>
-                    You cannot edit leads that you didn't create.
+                    You cannot edit these fields because you didn't create this
+                    lead.
                   </FormWarning>
                 )}
                 <TextFieldGroup
@@ -167,6 +174,7 @@ class EditTable extends React.Component {
                   onChange={this.onInputChange}
                   placeholder="Input name"
                   disabled={manual_add}
+                  required
                 />
                 <TextFieldGroup
                   type="email"
@@ -176,6 +184,7 @@ class EditTable extends React.Component {
                   onChange={this.onInputChange}
                   placeholder="Input email address"
                   disabled={manual_add}
+                  required
                 />
                 <TextFieldGroup
                   name="phone"
@@ -184,12 +193,14 @@ class EditTable extends React.Component {
                   onChange={this.onInputChange}
                   placeholder="Input contact number"
                   disabled={manual_add}
+                  required
                 />
                 <DateFieldGroup
                   value={date_send}
                   label="Date Sent"
                   onChange={this.onDateChange}
                   disabled={manual_add}
+                  required
                 />
                 <TextFieldGroup
                   name="source"
@@ -205,7 +216,8 @@ class EditTable extends React.Component {
                   ""
                 ) : (
                   <FormWarning>
-                    You cannot edit leads that you didn't create.
+                    You cannot edit these fields because you didn't create this
+                    lead.
                   </FormWarning>
                 )}
                 <TextareaFieldGroup
@@ -215,6 +227,7 @@ class EditTable extends React.Component {
                   onChange={this.onInputChange}
                   placeholder="Input message"
                   disabled={manual_add}
+                  required
                 />
               </TabPanel>
             </Tabs>

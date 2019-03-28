@@ -7,6 +7,13 @@ const TextFieldContainer = styled.div`
   display: block;
 `;
 
+const TextRequired = styled.span`
+  font-size 10px;
+  color: red;
+  text-transform: lowercase;
+  margin-left: 5px;
+`;
+
 const TextFieldGroup = ({
   type,
   name,
@@ -14,11 +21,13 @@ const TextFieldGroup = ({
   onChange,
   value,
   label,
-  disabled
+  disabled,
+  required
 }) => (
   <TextFieldContainer>
     <label htmlFor={name}>
       {label}
+      {required ? <TextRequired>*required</TextRequired> : ""}
       <input
         style={{
           display: "block",
@@ -50,7 +59,8 @@ TextFieldGroup.propTypes = {
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
-  label: PropTypes.string
+  label: PropTypes.string,
+  required: PropTypes.bool
 };
 
 export default TextFieldGroup;

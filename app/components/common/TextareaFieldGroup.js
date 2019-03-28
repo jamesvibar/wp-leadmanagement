@@ -7,6 +7,13 @@ const TextareaFieldContainer = styled.div`
   display: block;
 `;
 
+const TextRequired = styled.span`
+  font-size 10px;
+  color: red;
+  text-transform: lowercase;
+  margin-left: 5px;
+`;
+
 const TextareaFieldGroup = ({
   name,
   placeholder,
@@ -14,11 +21,13 @@ const TextareaFieldGroup = ({
   value,
   label,
   height,
-  disabled
+  disabled,
+  required
 }) => (
   <TextareaFieldContainer>
     <label htmlFor={name}>
       {label}
+      {required ? <TextRequired>*required</TextRequired> : ""}
       <textarea
         name={name}
         id={name}
@@ -50,7 +59,8 @@ TextareaFieldGroup.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   label: PropTypes.string,
-  height: PropTypes.string
+  height: PropTypes.string,
+  required: PropTypes.bool
 };
 
 export default TextareaFieldGroup;

@@ -338,10 +338,11 @@ class Leads {
         $has_been_contacted = esc_sql($request->get_param('has_been_contacted'));
         $profit = esc_sql($request->get_param('profit'));
         $last_edit = esc_sql($request->get_param('last_edit'));
+        $manual_add = esc_sql($request->get_param('manual_add'));
 
         $updated = $wpdb->query( $wpdb->prepare(
             "UPDATE `wp_database_emails`
-            SET name = %s, email = %s, phone = %d, message = %s, date_send = %s, source = %s, form_type = %s, form_type_id = %s, lead_source = %s, has_been_contacted = %d, profit = %d, last_edit = %s
+            SET name = %s, email = %s, phone = %d, message = %s, date_send = %s, source = %s, form_type = %s, form_type_id = %s, lead_source = %s, has_been_contacted = %d, profit = %d, last_edit = %s, manual_add = %d
             WHERE id = %d",
             $name,
             $email,
@@ -355,6 +356,7 @@ class Leads {
             $has_been_contacted,
             $profit,
             $last_edit,
+            $manual_add,
             $id
         ) );
 
@@ -376,8 +378,9 @@ class Leads {
             'form_type_id' => $form_type_id,
             'lead_source' => $lead_source,
             'has_been_contacted' => $has_been_contacted,
-            'last_edit' => $last_edit,
             'profit' => $profit,
+            'last_edit' => $last_edit,
+            'manual_add' => $manual_add,
         ), 200 );
     }
 

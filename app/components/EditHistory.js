@@ -19,7 +19,9 @@ const EditHistory = ({ leads }) => {
             <tr key={lead.id}>
               <td>{lead.id}</td>
               <td>{lead.name}</td>
-              <td>{lead.last_edit}</td>
+              <td>
+                <Moment format="MMMM DD YYYY LT">{lead.last_edit}</Moment>
+              </td>
             </tr>
           ))}
       </tbody>

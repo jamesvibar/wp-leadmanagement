@@ -14,12 +14,12 @@ const ActionHeader = ({ data: { id, name, date_send, last_edit } }) => (
     </h1>
     <p style={{ margin: "0px" }}>
       <strong>Date Submitted:</strong>{" "}
-      <Moment format="MMMM DD, YYYY">{date_send}</Moment>
+      <Moment format="MMMM DD, YYYY LT">{date_send}</Moment>
     </p>
     {last_edit ? (
       <p style={{ marginTop: "0px" }}>
         <strong>Last Edited:</strong>{" "}
-        <Moment format="MMMM DD, YYYY">{last_edit}</Moment>
+        <Moment format="MMMM DD, YYYY LT">{last_edit}</Moment>
       </p>
     ) : (
       ""

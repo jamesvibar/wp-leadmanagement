@@ -41,7 +41,7 @@ const LeadsTable = ({ leads, loading }) => {
     {
       Header: "Submit Date",
       accessor: "date_send",
-      Cell: row => <Moment format="MMMM DD, YYYY">{row.value}</Moment>
+      Cell: row => <Moment format="MMMM DD, YYYY LT">{row.value}</Moment>
     },
     {
       Header: "Source of Lead",
@@ -101,6 +101,7 @@ const LeadsTable = ({ leads, loading }) => {
           SubComponent={row => <Message data={row.original} />}
           className="-striped -highlight"
           filterable={true}
+          resizable={false}
         />
       </div>
     </React.Fragment>
