@@ -8,7 +8,7 @@ const TextFieldContainer = styled.div`
   display: block;
 `;
 
-const DateFieldGroup = ({ onChange, value, label }) => (
+const DateFieldGroup = ({ onChange, value, label, disabled }) => (
   <TextFieldContainer>
     <label htmlFor={name}>
       {label}
@@ -16,10 +16,15 @@ const DateFieldGroup = ({ onChange, value, label }) => (
         selected={value}
         onChange={onChange}
         dateFormat="MMMM d, yyyy"
+        disabled={parseInt(disabled) ? false : true}
       />
     </label>
   </TextFieldContainer>
 );
+
+DateFieldGroup.defaultProps = {
+  disabled: 1
+};
 
 DateFieldGroup.propTypes = {
   onChange: PropTypes.func.isRequired,

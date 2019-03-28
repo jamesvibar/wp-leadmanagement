@@ -13,7 +13,8 @@ const TextFieldGroup = ({
   placeholder,
   onChange,
   value,
-  label
+  label,
+  disabled
 }) => (
   <TextFieldContainer>
     <label htmlFor={name}>
@@ -32,13 +33,15 @@ const TextFieldGroup = ({
         placeholder={placeholder}
         onChange={onChange}
         value={value}
+        disabled={parseInt(disabled) ? false : true}
       />
     </label>
   </TextFieldContainer>
 );
 
 TextFieldGroup.defaultProps = {
-  type: "text"
+  type: "text",
+  disabled: 1
 };
 
 TextFieldGroup.propTypes = {
@@ -46,7 +49,7 @@ TextFieldGroup.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   label: PropTypes.string
 };
 

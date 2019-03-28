@@ -2,7 +2,9 @@ import {
   GET_LEADS,
   GET_LEAD,
   UPDATE_LEAD,
-  LEADS_LOADING
+  LEADS_LOADING,
+  CREATE_LEAD,
+  DELETE_LEAD
 } from "../actions/types";
 
 const initialState = {
@@ -21,7 +23,8 @@ export default function(state = initialState, action) {
     case GET_LEADS:
       return {
         ...state,
-        leads: action.payload,
+        // leads: action.payload,
+        leads: action.payload.filter(lead => lead.is_deleted == 0),
         loading: false
       };
     case GET_LEAD:
@@ -29,6 +32,16 @@ export default function(state = initialState, action) {
         ...state,
         lead: action.payload,
         loading: false
+      };
+    case DELETE_LEAD:
+      return {
+        ...state,
+        leads: state.leads.filter(lead => lead.id !== action.payload.id)
+      };
+    case CREATE_LEAD:
+      return {
+        ...state,
+        leads: [action.payload, ...state.leads]
       };
     case UPDATE_LEAD:
       return {

@@ -1,37 +1,33 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { connect } from "react-redux";
-import { getTables } from "../actions/settingsActions";
+import { getLeads } from "../actions/leadsActions";
+
 import LeadsTable from "../components/LeadsTable";
+import EditHistory from "../components/EditHistory";
 
-class Leads extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+class Leads extends React.Component {
   componentDidMount() {
-    this.props.getTables();
+    this.props.getLeads();
   }
 
   render() {
-    const { tables } = this.props;
-
+    const { leads, loading } = this.props;
     return (
       <div className="wrap">
         <h1>Lead Management</h1>
         <Tabs>
           <TabList>
-            {tables.map(table => (
-              <Tab>{table.table_name}</Tab>
-            ))}
+            <Tab>Leads</Tab>
+            <Tab>Edit History</Tab>
           </TabList>
-
-          {tables.map(table => (
-            <TabPanel>
-              <LeadsTable table={table.table_name} />
-            </TabPanel>
-          ))}
+          <TabPanel>
+            <LeadsTable leads={leads} loading={loading} />
+          </TabPanel>
+          <TabPanel>
+            <EditHistory leads={leads} />
+          </TabPanel>
         </Tabs>
       </div>
     );
@@ -39,15 +35,16 @@ class Leads extends Component {
 }
 
 Leads.propTypes = {
-  getTables: PropTypes.func.isRequired,
-  leads: PropTypes.array
+  leads: PropTypes.array,
+  loading: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
-  tables: state.settings.tables
+  leads: state.leads.leads,
+  loading: state.leads.loading
 });
 
 export default connect(
   mapStateToProps,
-  { getTables }
+  { getLeads }
 )(Leads);

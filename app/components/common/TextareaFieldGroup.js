@@ -13,7 +13,8 @@ const TextareaFieldGroup = ({
   onChange,
   value,
   label,
-  height
+  height,
+  disabled
 }) => (
   <TextareaFieldContainer>
     <label htmlFor={name}>
@@ -24,6 +25,7 @@ const TextareaFieldGroup = ({
         placeholder={placeholder}
         onChange={onChange}
         value={value}
+        disabled={parseInt(disabled) ? false : true}
         style={{
           display: "block",
           padding: "0.5em",
@@ -38,7 +40,8 @@ const TextareaFieldGroup = ({
 );
 
 TextareaFieldGroup.defaultProps = {
-  height: "100px"
+  height: "100px",
+  disabled: 1
 };
 
 TextareaFieldGroup.propTypes = {

@@ -2,7 +2,9 @@
 export const LEADS_LOADING = "LEADS_LOADING";
 export const GET_LEADS = "GET_LEADS";
 export const GET_LEAD = "GET_LEAD";
+export const DELETE_LEAD = "DELETE_LEAD";
 export const UPDATE_LEAD = "UPDATE_LEAD";
+export const CREATE_LEAD = "CREATE_LEAD";
 export const FETCH_WP = "FETCH_WP";
 
 // SETTINGS

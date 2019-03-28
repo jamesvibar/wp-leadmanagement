@@ -1,14 +1,16 @@
 import React from "react";
 import Popup from "reactjs-popup";
+import PropTypes from "prop-types";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
-import { updateLead } from "../../actions/leadsActions";
+import { updateLead, deleteLead } from "../../actions/leadsActions";
 import {
   EditButton,
   ContentContainer,
   FormSubmit,
-  FormDelete
+  FormDelete,
+  FormWarning
 } from "./EditTable.elements";
 import ActionHeader from "../form_partials/ActionHeader";
 
@@ -31,7 +33,9 @@ class EditTable extends React.Component {
       form_type_id: props.data.form_type_id,
       lead_source: props.data.lead_source,
       has_been_contacted: props.data.has_been_contacted,
-      profit: props.data.profit
+      profit: props.data.profit,
+      last_edit: props.data.last_edit,
+      manual_add: props.data.manual_add
     };
   }
 
@@ -64,19 +68,24 @@ class EditTable extends React.Component {
       form_type_id,
       lead_source,
       has_been_contacted,
-      profit
+      profit,
+      last_edit: new Date().toISOString()
     };
 
     this.props.updateLead(updatedLead, toast);
   };
 
+  onDeleteClick = id => {
+    this.props.deleteLead(id, toast);
+  };
+
   onInputChange = e => this.setState({ [e.target.name]: e.target.value });
+  onDateChange = date => this.setState({ date_send: date });
 
   onSelectInputChange = (selectedOption, action) => {
     this.setState({ [action.name]: selectedOption.value });
   };
 
-  onDateChange = date => this.setState({ date_send: date });
   render() {
     const {
       name,
@@ -89,9 +98,10 @@ class EditTable extends React.Component {
       form_type_id,
       lead_source,
       has_been_contacted,
-      profit
+      profit,
+      manual_add
     } = this.state;
-    const { data, loading, lead } = this.props;
+    const { data } = this.props;
 
     return (
       <Popup
@@ -112,6 +122,14 @@ class EditTable extends React.Component {
               </TabList>
 
               <TabPanel>
+                <TextFieldGroup
+                  type="number"
+                  name="profit"
+                  label="Profit"
+                  value={profit}
+                  onChange={this.onInputChange}
+                  placeholder="Input profit"
+                />
                 <SelectFieldGroup
                   label="Has been contacted?"
                   name="has_been_contacted"
@@ -123,10 +141,11 @@ class EditTable extends React.Component {
                   onChange={this.onSelectInputChange}
                 />
                 <SelectFieldGroup
-                  label="Where did it came from"
+                  label="Source of Lead"
                   name="lead_source"
                   value={lead_source}
                   options={[
+                    { label: "Nothing", value: "" },
                     { label: "Facebook", value: "Facebook" },
                     { label: "Google Search", value: "Google Search" }
                   ]}
@@ -134,12 +153,20 @@ class EditTable extends React.Component {
                 />
               </TabPanel>
               <TabPanel>
+                {parseInt(manual_add) ? (
+                  ""
+                ) : (
+                  <FormWarning>
+                    You cannot edit leads that you didn't create.
+                  </FormWarning>
+                )}
                 <TextFieldGroup
                   name="name"
                   label="Name"
                   value={name}
                   onChange={this.onInputChange}
                   placeholder="Input name"
+                  disabled={manual_add}
                 />
                 <TextFieldGroup
                   type="email"
@@ -148,6 +175,7 @@ class EditTable extends React.Component {
                   value={email}
                   onChange={this.onInputChange}
                   placeholder="Input email address"
+                  disabled={manual_add}
                 />
                 <TextFieldGroup
                   name="phone"
@@ -155,11 +183,13 @@ class EditTable extends React.Component {
                   value={phone}
                   onChange={this.onInputChange}
                   placeholder="Input contact number"
+                  disabled={manual_add}
                 />
                 <DateFieldGroup
                   value={date_send}
                   label="Date Sent"
                   onChange={this.onDateChange}
+                  disabled={manual_add}
                 />
                 <TextFieldGroup
                   name="source"
@@ -167,28 +197,34 @@ class EditTable extends React.Component {
                   value={source}
                   onChange={this.onInputChange}
                   placeholder="On what contact form from the site?"
+                  disabled={manual_add}
                 />
               </TabPanel>
               <TabPanel>
+                {parseInt(manual_add) ? (
+                  ""
+                ) : (
+                  <FormWarning>
+                    You cannot edit leads that you didn't create.
+                  </FormWarning>
+                )}
                 <TextareaFieldGroup
                   name="message"
                   label="Message"
                   value={message}
                   onChange={this.onInputChange}
                   placeholder="Input message"
+                  disabled={manual_add}
                 />
               </TabPanel>
             </Tabs>
-            {/* <span>{message}</span> <br /> */}
-            {/* <span>{date_send}</span> <br />
-            <span>{source}</span> <br />
-            <span>{form_type}</span> <br />
-            <span>{form_type_id}</span> <br />
-            <span>{lead_source}</span> <br />
-            <span>{has_been_contacted}</span> <br />
-            <span>{profit}</span> <br /> */}
-            <FormSubmit type="submit">Save</FormSubmit>
-            <FormDelete type="button">Delete</FormDelete>
+            <FormSubmit type="submit">Save Lead</FormSubmit>
+            <FormDelete
+              type="button"
+              onClick={() => this.onDeleteClick(data.id)}
+            >
+              Delete
+            </FormDelete>
           </form>
         </ContentContainer>
       </Popup>
@@ -196,12 +232,12 @@ class EditTable extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  lead: state.leads.lead,
-  loading: state.leads.loading
-});
+EditTable.propTypes = {
+  updateLead: PropTypes.func.isRequired,
+  deleteLead: PropTypes.func.isRequired
+};
 
 export default connect(
-  mapStateToProps,
-  { updateLead }
+  () => ({}),
+  { updateLead, deleteLead }
 )(EditTable);

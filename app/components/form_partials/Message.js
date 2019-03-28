@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import Text from "react-format-text";
 
 const Container = styled.div`
   margin: 1em;
@@ -10,15 +9,25 @@ const Container = styled.div`
   border-radius: 5px;
 `;
 
-const Message = ({ data }) => {
-  const { message, name, phone, source } = data;
+const Message = ({ data: { message, name, phone, source } }) => {
   return (
     <Container>
-      <strong>{name}</strong>
-      <strong style={{ display: "block" }}>Contact Number: {phone}</strong>
-      <strong style={{ display: "block" }}>Source: {source}</strong>
+      <span>
+        <strong>Full Name:</strong> {name}
+      </span>
+      <span style={{ display: "block" }}>
+        <strong>Contact Number:</strong> {phone}
+      </span>
+      {source ? (
+        <span style={{ display: "block" }}>
+          <strong>Form Origin:</strong> {source}
+        </span>
+      ) : (
+        ""
+      )}
+
       <hr />
-      <Text style={{ fontSize: "1.25em" }}>{message}</Text>
+      <p style={{ fontSize: "1.25em" }}>{message}</p>
     </Container>
   );
 };
