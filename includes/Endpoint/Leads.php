@@ -99,7 +99,7 @@ class Leads {
             array(
                 'methods'               => \WP_REST_Server::READABLE,
                 'callback'              => array( $this, 'get_lead' ),
-                // 'permission_callback'   => array( $this, 'admin_permissions_check' ),
+                'permission_callback'   => array( $this, 'admin_permissions_check' ),
                 'args'                  => array(
                     'id' => [
                         'required' => 'true'
@@ -116,7 +116,7 @@ class Leads {
             array(
                 'methods'               => \WP_REST_Server::EDITABLE,
                 'callback'              => array( $this, 'update_lead' ),
-                // 'permission_callback'   => array( $this, 'admin_permissions_check' ),
+                'permission_callback'   => array( $this, 'admin_permissions_check' ),
                 'args'                  => array(
                     'id' => [
                         'required' => 'true'
@@ -196,6 +196,7 @@ class Leads {
             array(
                 'methods'               => \WP_REST_Server::CREATABLE,
                 'callback'              => array( $this, 'add_lead' ),
+                'permission_callback'   => array( $this, 'admin_permissions_check' ),
                 'args'                  => array( //Expected parameters for this request
                     'name' => array(
                         'required' => true,
@@ -271,6 +272,7 @@ class Leads {
             array(
                 'methods'               => \WP_REST_Server::DELETABLE,
                 'callback'              => array( $this, 'delete_lead' ),
+                'permission_callback'   => array( $this, 'admin_permissions_check' ),
                 'args'                  => array(),
             ),
         ) );
@@ -457,7 +459,7 @@ class Leads {
         $deleted = $wpdb->update(
             'wp_database_emails',           // TABLE_NAME
             array( 'is_deleted' => 1 ),     // VALUES
-            array( 'id' => $id),           // WHERE
+            array( 'id' => $id),            // WHERE
             array( '%d' ),                  // VALUE FORMAT %d = integer
             array( '%d' )                   // WHERE VALUE FORMAT %d = integer  
         );

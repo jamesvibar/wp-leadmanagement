@@ -79,8 +79,8 @@ function init() {
 	$wpr = Plugin::get_instance();
 	$wpr_shortcode = Shortcode::get_instance();
 	$wpr_leads = Leads::get_instance();
-	$wpr_admin = Admin::get_instance();
-	$wpr_rest_admin = Endpoint\Admin::get_instance();
+	// $wpr_admin = Admin::get_instance();
+	// $wpr_rest_admin = Endpoint\Admin::get_instance();
 	$wpr_rest_leads = Endpoint\Leads::get_instance();
 }
 add_action( 'plugins_loaded', 'Pangolin\\WPR\\init' );

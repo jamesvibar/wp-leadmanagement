@@ -9,9 +9,13 @@ import {
 import axios from "axios";
 import { wordpress } from "../config/wordpress";
 
+axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common["Accept"] = "application/json";
+axios.defaults.headers.common["X-WP-Nonce"] = wordpress.api_nonce;
+
 export const getLeads = () => dispatch => {
   dispatch(setLeadsLoading());
-  axios.get(`${wordpress.api_url}/leads`).then(res => {
+  axios.get(`${wordpress.api_url}leads`).then(res => {
     dispatch({
       type: GET_LEADS,
       payload: res.data
@@ -21,7 +25,7 @@ export const getLeads = () => dispatch => {
 
 export const getLead = id => dispatch => {
   dispatch(setLeadsLoading());
-  axios.get(`${wordpress.api_url}/leads/${id}`).then(res => {
+  axios.get(`${wordpress.api_url}leads/${id}`).then(res => {
     dispatch({
       type: GET_LEAD,
       payload: res.data
@@ -31,7 +35,7 @@ export const getLead = id => dispatch => {
 
 export const updateLead = (updatedLead, toast) => dispatch => {
   axios
-    .post(`${wordpress.api_url}/leads/${updatedLead.id}`, updatedLead)
+    .post(`${wordpress.api_url}leads/${updatedLead.id}`, updatedLead)
     .then(res => {
       dispatch({
         type: UPDATE_LEAD,
@@ -55,7 +59,7 @@ export const updateLead = (updatedLead, toast) => dispatch => {
  */
 export const deleteLead = (id, toast) => dispatch => {
   axios
-    .delete(`${wordpress.api_url}/leads/${id}`)
+    .delete(`${wordpress.api_url}leads/${id}`)
     .then(res => {
       dispatch({
         type: DELETE_LEAD,
@@ -72,7 +76,7 @@ export const deleteLead = (id, toast) => dispatch => {
 
 export const createLead = (newLead, toast, close) => dispatch => {
   axios
-    .post(`${wordpress.api_url}/leads`, newLead)
+    .post(`${wordpress.api_url}leads`, newLead)
     .then(res => {
       dispatch({
         type: CREATE_LEAD,
