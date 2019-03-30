@@ -16,15 +16,6 @@ __Did you know?__ wp-leadmanagement is built with React! Many thanks to [gopango
     - [Todos](#todos)
     - [Setup and installation](#setup-and-installation)
     - [Usage](#usage)
-    - [Quick Start](#quick-start)
-        - [Introduction](#introduction)
-        - [Using the Shortcode](#using-the-shortcode)
-        - [Using the Widget](#using-the-widget)
-        - [Using REST Controllers](#using-rest-controllers)
-        - [Using the Settings Page](#using-the-settings-page)
-        - [Using fetchWP](#using-fetchwp)
-    - [Technologies](#technologies)
-    - [Tutorials](#tutorials)
     - [Credits](#credits)
 
 <!-- /TOC -->
@@ -41,5 +32,4 @@ __Did you know?__ wp-leadmanagement is built with React! Many thanks to [gopango
 __To learn about how to use wp-reactivate. Please visit [wpr-reactivate repository](https://github.com/gopangolin/wp-reactivate)__
 
 ## Credits
-*wp-reactivate by [Pangolin](https://gopangolin.com)*
 *Made by [James Vibar](www.jamesvibar.com)*
