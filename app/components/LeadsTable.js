@@ -4,10 +4,11 @@ import Moment from "react-moment";
 import styled from "styled-components";
 import NumberFormat from "react-number-format";
 import PropTypes from "prop-types";
-import DatePicker from "react-datepicker";
+import matchSorter from "match-sorter";
 import Message from "./form_partials/Message";
 import EditTable from "./edit";
 import AddTable from "./add";
+import Cleave from "cleave.js/react";
 
 const HasBeenContacted = styled.div`
   padding: 0.25em 1em;
@@ -23,7 +24,15 @@ const HasBeenContacted = styled.div`
 `;
 
 const LeadsTable = ({ leads, loading }) => {
-  const [date, setDate] = useState(new Date());
+  // const [date, setDate] = useState();
+  let leadsData;
+
+  // Wait until leads has been loaded.
+  if (leads.length !== 0) {
+    // Filter result
+    // leadsData = leads.filter(lead => lead.id == 2554)
+    leadsData = leads;
+  }
 
   const columns = [
     {
@@ -34,41 +43,71 @@ const LeadsTable = ({ leads, loading }) => {
     {
       Header: "Name",
       accessor: "name",
-      style: { textTransform: "capitalize" }
+      style: { textTransform: "capitalize" },
+      filterMethod: (filter, rows) =>
+        matchSorter(rows, filter.value, { keys: ["name"] }),
+      filterAll: true
     },
     {
       Header: "Email",
-      accessor: "email"
+      accessor: "email",
+      filterMethod: (filter, rows) =>
+        matchSorter(rows, filter.value, { keys: ["email"] }),
+      filterAll: true
     },
     {
       Header: "Submit Date",
       accessor: "date_send",
-      style: { overflow: 'visible' },
-      Filter: ({filter, onChange}) => { 
-        console.log(`Flter: ${filter}`);
-        console.log(`Onchange: ${onChange}`)
-        return <DatePicker 
-            onChange={date => console.log(date)}
-            selected={date}
-            withPortal />
-       },
-      Cell: row => <Moment format="MMMM DD, YYYY LT">{row.value}</Moment>
+      Cell: row => <Moment format="MMMM DD, YYYY LT">{row.value}</Moment>,
+      Filter: ({ filter, onChange }) => {
+        return (
+          <Cleave
+            placeholder="YYYY-MM-DD"
+            options={{
+              date: true,
+              delimiter: "-",
+              datePattern: ["Y", "m", "d"]
+            }}
+            onChange={event => {
+              onChange(event.target.value);
+            }}
+          />
+        );
+      }
     },
     {
       Header: "Source of Lead",
       accessor: "lead_source"
-      // Cell: row => <Moment format="MMMM DD, YYYY">{row.value}</Moment>
     },
     {
       Header: "Has been contacted?",
       accessor: "has_been_contacted",
       style: { textAlign: "center" },
-      Cell: row => {
-        if (parseInt(row.value) === 0) {
-          return <HasBeenContacted>False</HasBeenContacted>;
-        } else {
-          return <HasBeenContacted truthy>True</HasBeenContacted>;
+      Cell: ({ value }) =>
+        parseInt(value) === 0 ? (
+          <HasBeenContacted>False</HasBeenContacted>
+        ) : (
+          <HasBeenContacted truthy>True</HasBeenContacted>
+        ),
+      Filter: ({ filter, onChange }) => (
+        <select
+          onChange={event => onChange(event.target.value)}
+          style={{ width: "100%" }}
+          value={filter ? filter.value : "all"}
+        >
+          <option value="all">Show All</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      ),
+      filterMethod: (filter, row) => {
+        if (filter.value === "all") {
+          return true;
         }
+        if (filter.value === "true") {
+          return row[filter.id] == 1;
+        }
+        return row[filter.id] == 0;
       }
     },
     {
@@ -106,23 +145,13 @@ const LeadsTable = ({ leads, loading }) => {
       <div style={ReactTableContainerStyles}>
         <ReactTable
           loading={loading}
-          data={leads}
+          data={leadsData}
           columns={columns}
           showPaginationTop={true}
           SubComponent={row => <Message data={row.original} />}
           className="-striped -highlight"
           filterable={true}
           resizable={false}
-          defaultFilterMethod={(filter, row, column) => {
-            const id = filter.pivotId || filter.id;
-            if(typeof filter.value === "object") {
-              return row[id] !== undefined
-              ? filter.value.indexOf(row[id]) > -1
-              : true;
-            } else {
-              return row[id] !== undefined ? String(row[id]).indexOf(filter.value) > -1 : true;
-            }
-          }}
         />
       </div>
     </React.Fragment>

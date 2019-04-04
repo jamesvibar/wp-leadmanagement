@@ -13,11 +13,11 @@ import {
   FormWarning
 } from "./EditTable.elements";
 import ActionHeader from "../form_partials/ActionHeader";
-
 import TextFieldGroup from "../common/TextFieldGroup";
 import TextareaFieldGroup from "../common/TextareaFieldGroup";
 import DateFieldGroup from "../common/DateFieldGroup";
 import SelectFieldGroup from "../common/SelectFieldGroup";
+import CleaveFieldGroup from "../common/CleaveFieldGroup";
 
 class EditTable extends React.Component {
   constructor(props) {
@@ -128,13 +128,14 @@ class EditTable extends React.Component {
               </TabList>
 
               <TabPanel>
-                <TextFieldGroup
-                  type="number"
-                  name="profit"
+                <CleaveFieldGroup
                   label="Profit"
-                  value={profit}
-                  onChange={this.onInputChange}
-                  placeholder="Input profit"
+                  onChange={() => console.log("test")}
+                  placeholder="Input value of lead"
+                  options={{
+                    numeral: true,
+                    numeralThousandsGroupStyle: "thousand"
+                  }}
                 />
                 <SelectFieldGroup
                   label="Has been contacted?"
