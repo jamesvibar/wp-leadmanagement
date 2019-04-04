@@ -6,6 +6,13 @@ const initialState = {};
 
 const middleware = [ReduxThunk];
 
+// const store = createStore(
+//   rootReducer,
+//   initialState,
+//   applyMiddleware(...middleware),
+// );
+
+// Store with Redux Dev Tools (breaks in firefox)
 const store = createStore(
   rootReducer,
   initialState,

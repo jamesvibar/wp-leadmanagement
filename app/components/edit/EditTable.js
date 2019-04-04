@@ -153,7 +153,9 @@ class EditTable extends React.Component {
                   options={[
                     { label: "Nothing", value: "" },
                     { label: "Facebook", value: "Facebook" },
-                    { label: "Google Search", value: "Google Search" }
+                    { label: "Google Search", value: "Google Search" },
+                    { label: "Pay per click", value: "Pay per click" },
+                    { label: "Others", value: "Others" }
                   ]}
                   onChange={this.onSelectInputChange}
                 />

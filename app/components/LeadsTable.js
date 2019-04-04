@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactTable from "react-table";
 import Moment from "react-moment";
 import styled from "styled-components";
 import NumberFormat from "react-number-format";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import DatePicker from "react-datepicker";
 import Message from "./form_partials/Message";
 import EditTable from "./edit";
 import AddTable from "./add";
@@ -23,6 +23,8 @@ const HasBeenContacted = styled.div`
 `;
 
 const LeadsTable = ({ leads, loading }) => {
+  const [date, setDate] = useState(new Date());
+
   const columns = [
     {
       Header: "ID",
@@ -41,6 +43,15 @@ const LeadsTable = ({ leads, loading }) => {
     {
       Header: "Submit Date",
       accessor: "date_send",
+      style: { overflow: 'visible' },
+      Filter: ({filter, onChange}) => { 
+        console.log(`Flter: ${filter}`);
+        console.log(`Onchange: ${onChange}`)
+        return <DatePicker 
+            onChange={date => console.log(date)}
+            selected={date}
+            withPortal />
+       },
       Cell: row => <Moment format="MMMM DD, YYYY LT">{row.value}</Moment>
     },
     {
@@ -61,7 +72,7 @@ const LeadsTable = ({ leads, loading }) => {
       }
     },
     {
-      Header: "Profit",
+      Header: "Value",
       accessor: "profit",
       Cell: row => (
         <NumberFormat
@@ -102,6 +113,16 @@ const LeadsTable = ({ leads, loading }) => {
           className="-striped -highlight"
           filterable={true}
           resizable={false}
+          defaultFilterMethod={(filter, row, column) => {
+            const id = filter.pivotId || filter.id;
+            if(typeof filter.value === "object") {
+              return row[id] !== undefined
+              ? filter.value.indexOf(row[id]) > -1
+              : true;
+            } else {
+              return row[id] !== undefined ? String(row[id]).indexOf(filter.value) > -1 : true;
+            }
+          }}
         />
       </div>
     </React.Fragment>
