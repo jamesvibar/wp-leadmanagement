@@ -39,4 +39,4 @@ Currently, leads are read from the **wp-database-emails** table. There are futur
 ## Credits
 
 _Made by [James Vibar](www.jamesvibar.com)_
-Test GPG key commit
+Test GPG key commit 2
