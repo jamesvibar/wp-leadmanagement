@@ -20,7 +20,8 @@ const CleaveFieldGroup = ({
   label,
   required,
   placeholder,
-  options
+  options,
+  value
 }) => (
   <TextFieldContainer>
     <label htmlFor={name}>
@@ -36,6 +37,7 @@ const CleaveFieldGroup = ({
         }}
         placeholder={placeholder}
         onChange={onChange}
+        value={value}
         options={{ ...options }}
       />
     </label>

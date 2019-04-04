@@ -16,6 +16,7 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import TextareaFieldGroup from "../common/TextareaFieldGroup";
 import DateFieldGroup from "../common/DateFieldGroup";
 import SelectFieldGroup from "../common/SelectFieldGroup";
+import CleaveFieldGroup from "../common/CleaveFieldGroup";
 
 class AddTable extends React.Component {
   constructor(props) {
@@ -49,19 +50,16 @@ class AddTable extends React.Component {
   };
 
   onInputChange = e => this.setState({ [e.target.name]: e.target.value });
-
-  onSelectInputChange = (selectedOption, action) => {
-    this.setState({ [action.name]: selectedOption.value });
-  };
-
   onDateChange = date => this.setState({ date_send: date });
-
-  closeModal = () => {
-    this.setState({ isFormOpen: false });
-  };
-
-  openModal = () => {
-    this.setState({ isFormOpen: true });
+  onSelectInputChange = (selectedOption, action) =>
+    this.setState({ [action.name]: selectedOption.value });
+  closeModal = () => this.setState({ isFormOpen: false });
+  openModal = () => this.setState({ isFormOpen: true });
+  onCleaveInputChange = e => {
+    let cleanRawValue = e.target.rawValue;
+    while (cleanRawValue.charAt(0) == "$")
+      cleanRawValue = cleanRawValue.substr(1);
+    this.setState({ profit: cleanRawValue });
   };
 
   render() {
@@ -104,13 +102,16 @@ class AddTable extends React.Component {
                 </TabList>
 
                 <TabPanel>
-                  <TextFieldGroup
-                    type="number"
-                    name="profit"
+                  <CleaveFieldGroup
                     label="Profit"
-                    value={profit}
-                    onChange={this.onInputChange}
-                    placeholder="Input profit"
+                    onChange={this.onCleaveInputChange}
+                    placeholder="Input value of lead"
+                    value={0}
+                    options={{
+                      prefix: "$",
+                      numeral: true,
+                      numeralThousandsGroupStyle: "thousand"
+                    }}
                   />
                   <SelectFieldGroup
                     label="Has been contacted?"
@@ -127,8 +128,11 @@ class AddTable extends React.Component {
                     name="lead_source"
                     value={lead_source}
                     options={[
+                      { label: "Nothing", value: "" },
                       { label: "Facebook", value: "Facebook" },
-                      { label: "Google Search", value: "Google Search" }
+                      { label: "Google Search", value: "Google Search" },
+                      { label: "Pay per click", value: "Pay per click" },
+                      { label: "Others", value: "Others" }
                     ]}
                     onChange={this.onSelectInputChange}
                   />

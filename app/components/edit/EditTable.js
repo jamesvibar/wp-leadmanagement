@@ -83,9 +83,13 @@ class EditTable extends React.Component {
 
   onInputChange = e => this.setState({ [e.target.name]: e.target.value });
   onDateChange = date => this.setState({ date_send: date });
-
-  onSelectInputChange = (selectedOption, action) => {
+  onSelectInputChange = (selectedOption, action) =>
     this.setState({ [action.name]: selectedOption.value });
+  onCleaveInputChange = e => {
+    let cleanRawValue = e.target.rawValue;
+    while (cleanRawValue.charAt(0) == "$")
+      cleanRawValue = cleanRawValue.substr(1);
+    this.setState({ profit: cleanRawValue });
   };
 
   render() {
@@ -115,7 +119,6 @@ class EditTable extends React.Component {
           borderRadius: "5px",
           border: "none"
         }}
-        // onOpen={() => this.loadLead(id)}
       >
         <ContentContainer>
           <ActionHeader data={data} />
@@ -130,9 +133,11 @@ class EditTable extends React.Component {
               <TabPanel>
                 <CleaveFieldGroup
                   label="Profit"
-                  onChange={() => console.log("test")}
+                  onChange={this.onCleaveInputChange}
+                  value={profit}
                   placeholder="Input value of lead"
                   options={{
+                    prefix: "$",
                     numeral: true,
                     numeralThousandsGroupStyle: "thousand"
                   }}
