@@ -7,5 +7,8 @@ export const UPDATE_LEAD = "UPDATE_LEAD";
 export const CREATE_LEAD = "CREATE_LEAD";
 export const FETCH_WP = "FETCH_WP";
 
+//FILTERS
+export const FILTER_LEADS = "FILTER_LEADS";
+
 // SETTINGS
 export const GET_TABLES = "GET_TABLES";

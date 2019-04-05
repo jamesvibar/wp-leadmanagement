@@ -23,19 +23,19 @@ class EditTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: props.data.name,
-      email: props.data.email,
-      phone: props.data.phone,
-      message: props.data.message,
-      date_send: new Date(props.data.date_send),
-      source: props.data.source,
-      form_type: props.data.form_type,
-      form_type_id: props.data.form_type_id,
-      lead_source: props.data.lead_source,
-      has_been_contacted: props.data.has_been_contacted,
-      profit: props.data.profit,
-      last_edit: props.data.last_edit,
-      manual_add: props.data.manual_add
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      date_send: undefined,
+      source: "",
+      form_type: "",
+      form_type_id: "",
+      lead_source: "",
+      has_been_contacted: "",
+      profit: "",
+      last_edit: "",
+      manual_add: ""
     };
   }
 
@@ -92,6 +92,41 @@ class EditTable extends React.Component {
     this.setState({ profit: cleanRawValue });
   };
 
+  onEditOpen = () => {
+    this.setState({
+      name: this.props.data.name,
+      email: this.props.data.email,
+      phone: this.props.data.phone,
+      message: this.props.data.message,
+      date_send: new Date(this.props.data.date_send),
+      source: this.props.data.source,
+      form_type: this.props.data.form_type,
+      form_type_id: this.props.data.form_type_id,
+      lead_source: this.props.data.lead_source,
+      has_been_contacted: this.props.data.has_been_contacted,
+      profit: this.props.data.profit,
+      last_edit: this.props.data.last_edit,
+      manual_add: this.props.data.manual_add
+    });
+  };
+  onEditClose = () => {
+    this.state = {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      date_send: undefined,
+      source: "",
+      form_type: "",
+      form_type_id: "",
+      lead_source: "",
+      has_been_contacted: "",
+      profit: "",
+      last_edit: "",
+      manual_add: ""
+    };
+  };
+
   render() {
     const {
       name,
@@ -119,6 +154,8 @@ class EditTable extends React.Component {
           borderRadius: "5px",
           border: "none"
         }}
+        onOpen={this.onEditOpen}
+        onClose={this.onEditClose}
       >
         <ContentContainer>
           <ActionHeader data={data} />

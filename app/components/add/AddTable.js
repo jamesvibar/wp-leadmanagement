@@ -26,7 +26,7 @@ class AddTable extends React.Component {
       email: "",
       phone: "",
       message: "",
-      date_send: new Date(),
+      date_send: undefined,
       source: "",
       form_type: "",
       form_type_id: "",
@@ -53,14 +53,28 @@ class AddTable extends React.Component {
   onDateChange = date => this.setState({ date_send: date });
   onSelectInputChange = (selectedOption, action) =>
     this.setState({ [action.name]: selectedOption.value });
-  closeModal = () => this.setState({ isFormOpen: false });
-  openModal = () => this.setState({ isFormOpen: true });
   onCleaveInputChange = e => {
     let cleanRawValue = e.target.rawValue;
     while (cleanRawValue.charAt(0) == "$")
       cleanRawValue = cleanRawValue.substr(1);
     this.setState({ profit: cleanRawValue });
   };
+  openModal = () => this.setState({ isFormOpen: true, date_send: new Date() });
+  closeModal = () =>
+    this.setState({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      date_send: undefined,
+      source: "",
+      form_type: "",
+      form_type_id: "",
+      lead_source: "",
+      has_been_contacted: "",
+      profit: "",
+      isFormOpen: false
+    });
 
   render() {
     const {
