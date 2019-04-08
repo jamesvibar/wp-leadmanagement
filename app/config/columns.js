@@ -19,6 +19,20 @@ const HasBeenContacted = styled.div`
   font-weight: 500;
 `;
 
+const Editable = styled.div`
+  width: 10px;
+  height: 10px;
+  background: ${({ isEditable }) =>
+    parseInt(isEditable) ? "green" : "#d9d9d9"}
+  margin-right: 6px;
+  border-radius: 50%;
+`;
+
+const EditContainer = styled.div`
+  \display: flex;
+  align-items: center;
+`;
+
 const columns = [
   {
     Header: "ID",
@@ -62,7 +76,39 @@ const columns = [
   },
   {
     Header: "Source of Lead",
-    accessor: "lead_source"
+    accessor: "lead_source",
+    Filter: ({ filter, onChange }) => (
+      <select
+        onChange={event => onChange(event.target.value)}
+        style={{ width: "100%" }}
+        value={filter ? filter.value : "all"}
+      >
+        <option value="all">Show All</option>
+        <option value="facebook">Facebook</option>
+        <option value="googlesearch">Google Search</option>
+        <option value="payperclick">Pay per Click</option>
+        <option value="others">Others</option>
+        <option value="nothing">Nothing</option>
+      </select>
+    ),
+    filterMethod: (filter, row) => {
+      if (filter.value === "all") {
+        return true;
+      }
+      if (filter.value === "facebook") {
+        return row[filter.id] == "Facebook";
+      }
+      if (filter.value === "googlesearch") {
+        return row[filter.id] == "Google Search";
+      }
+      if (filter.value === "payperclick") {
+        return row[filter.id] == "Pay per click";
+      }
+      if (filter.value === "others") {
+        return row[filter.id] == "Others";
+      }
+      return row[filter.id] == "";
+    }
   },
   {
     Header: "Has been contacted?",
@@ -109,7 +155,12 @@ const columns = [
   },
   {
     Header: "Actions",
-    Cell: row => <EditTable data={row.original} />
+    Cell: row => (
+      <EditContainer>
+        <Editable isEditable={row.original.manual_add} />
+        <EditTable data={row.original} />
+      </EditContainer>
+    )
   }
 ];
 

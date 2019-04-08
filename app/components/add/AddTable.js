@@ -59,7 +59,12 @@ class AddTable extends React.Component {
       cleanRawValue = cleanRawValue.substr(1);
     this.setState({ profit: cleanRawValue });
   };
-  openModal = () => this.setState({ isFormOpen: true, date_send: new Date() });
+  openModal = () =>
+    this.setState({
+      isFormOpen: true,
+      has_been_contacted: "0",
+      date_send: new Date()
+    });
   closeModal = () =>
     this.setState({
       name: "",

@@ -1,4 +1,4 @@
-import { FILTER_LEADS } from "./types";
+import { FILTER_LEADS, RESET_FILTER } from "./types";
 
 export const filterLeads = (startDate, endDate) => dispatch => {
   startDate = startDate.getTime();
@@ -9,5 +9,11 @@ export const filterLeads = (startDate, endDate) => dispatch => {
       startDate,
       endDate
     }
+  });
+};
+
+export const resetFilter = () => dispatch => {
+  dispatch({
+    type: RESET_FILTER
   });
 };

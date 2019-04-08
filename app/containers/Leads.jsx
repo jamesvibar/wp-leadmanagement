@@ -13,7 +13,7 @@ class Leads extends React.Component {
   }
 
   render() {
-    const { leads, loading, filteredLeads } = this.props;
+    const { leads, loading, filteredLeads, filtered } = this.props;
     return (
       <div className="wrap">
         <h1>Lead Management</h1>
@@ -23,7 +23,7 @@ class Leads extends React.Component {
             <Tab>Edit History</Tab>
           </TabList>
           <TabPanel>
-            <LeadsTable leads={leads} filteredLeads={filteredLeads} loading={loading} />
+            <LeadsTable leads={leads} filteredLeads={filteredLeads} loading={loading} filtered={filtered} />
           </TabPanel>
           <TabPanel>
             <EditHistory leads={leads} />
@@ -42,7 +42,8 @@ Leads.propTypes = {
 const mapStateToProps = state => ({
   leads: state.leads.leads,
   loading: state.leads.loading,
-  filteredLeads: state.leads.filteredLeads
+  filteredLeads: state.leads.filteredLeads,
+  filtered: state.leads.filtered,
 });
 
 export default connect(

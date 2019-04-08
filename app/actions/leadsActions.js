@@ -6,6 +6,7 @@ import {
   CREATE_LEAD,
   DELETE_LEAD
 } from "./types";
+import { resetFilter } from "./filterActions";
 import axios from "axios";
 import { wordpress } from "../config/wordpress";
 

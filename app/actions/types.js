@@ -9,6 +9,7 @@ export const FETCH_WP = "FETCH_WP";
 
 //FILTERS
 export const FILTER_LEADS = "FILTER_LEADS";
+export const RESET_FILTER = "RESET_FILTER";
 
 // SETTINGS
 export const GET_TABLES = "GET_TABLES";

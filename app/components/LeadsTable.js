@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ReactTable from "react-table";
 import columns from "../config/columns";
 import Message from "./form_partials/Message";
 import AddTable from "./add";
 import DateRange from "./form_partials/DateRange";
+import ProfitDisplay from "./ProfitDisplay";
 
-const LeadsTable = ({ leads, filteredLeads, loading }) => {
-  const [total, setTotal] = useState(0);
-
+const LeadsTable = ({ leads, filteredLeads, loading, filtered }) => {
   // Initialize our leads variable
   let leadsData;
   // Wait until leads has been loaded.
-  if (filteredLeads.length !== 0) {
+  if (filteredLeads.length !== 0 || filtered) {
     // Set out leads to the loaded leads
     leadsData = filteredLeads;
   } else {
@@ -21,9 +20,7 @@ const LeadsTable = ({ leads, filteredLeads, loading }) => {
 
   return (
     <React.Fragment>
-      <div style={TotalDisplayContainerStyles}>
-        <h1 style={{ marginTop: "0", padding: "0" }}>Total: {total}</h1>
-      </div>
+      <ProfitDisplay />
       <div style={AddTableContainerStyles}>
         <DateRange />
         <AddTable />
@@ -42,11 +39,6 @@ const LeadsTable = ({ leads, filteredLeads, loading }) => {
       </div>
     </React.Fragment>
   );
-};
-
-const TotalDisplayContainerStyles = {
-  textAlign: "right",
-  fontSize: "2.5em"
 };
 
 const AddTableContainerStyles = {
