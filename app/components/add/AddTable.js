@@ -31,6 +31,7 @@ class AddTable extends React.Component {
       form_type: "",
       form_type_id: "",
       lead_source: "",
+      lead_source_other: "",
       has_been_contacted: "",
       profit: "",
       isFormOpen: false
@@ -42,6 +43,10 @@ class AddTable extends React.Component {
 
     const newLead = {
       ...this.state,
+      lead_source:
+        this.state.lead_source === "Others"
+          ? this.state.lead_source_other
+          : this.state.lead_source,
       profit: this.state.profit ? this.state.profit : 0,
       manual_add: 1
     };
@@ -92,6 +97,7 @@ class AddTable extends React.Component {
       form_type,
       form_type_id,
       lead_source,
+      lead_source_other,
       has_been_contacted,
       profit,
       isFormOpen
@@ -155,6 +161,15 @@ class AddTable extends React.Component {
                     ]}
                     onChange={this.onSelectInputChange}
                   />
+                  {lead_source === "Others" && (
+                    <TextFieldGroup
+                      name="lead_source_other"
+                      label="Please specify the source of lead."
+                      value={lead_source_other}
+                      onChange={this.onInputChange}
+                      placeholder="Please specify here"
+                    />
+                  )}
                 </TabPanel>
                 <TabPanel>
                   <TextFieldGroup

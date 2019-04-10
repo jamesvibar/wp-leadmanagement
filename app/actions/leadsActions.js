@@ -34,7 +34,7 @@ export const getLead = id => dispatch => {
   });
 };
 
-export const updateLead = (updatedLead, toast) => dispatch => {
+export const updateLead = (updatedLead, toast, close) => dispatch => {
   axios
     .post(`${wordpress.api_url}leads/${updatedLead.id}`, updatedLead)
     .then(res => {
@@ -44,6 +44,7 @@ export const updateLead = (updatedLead, toast) => dispatch => {
       });
       if (res.status === 200) {
         toast.success("Lead has been saved successfully");
+        close();
       }
     })
     .catch(err => {

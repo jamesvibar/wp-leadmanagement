@@ -33,6 +33,7 @@ class EditTable extends React.Component {
       form_type: "",
       form_type_id: "",
       lead_source: "",
+      lead_source_other: "",
       has_been_contacted: "",
       profit: "",
       last_edit: "",
@@ -54,6 +55,7 @@ class EditTable extends React.Component {
       form_type,
       form_type_id,
       lead_source,
+      lead_source_other,
       has_been_contacted,
       profit,
       manual_add
@@ -69,14 +71,14 @@ class EditTable extends React.Component {
       source,
       form_type,
       form_type_id,
-      lead_source,
+      lead_source: lead_source === "Others" ? lead_source_other : lead_source,
       has_been_contacted,
       profit,
       last_edit: new Date().toISOString(),
       manual_add
     };
 
-    this.props.updateLead(updatedLead, toast);
+    this.props.updateLead(updatedLead, toast, this.closeModal);
   };
 
   onDeleteClick = id => {
@@ -97,6 +99,17 @@ class EditTable extends React.Component {
   openModal = () => {
     const { data } = this.props;
 
+    const options = ["Nothing", "Facebook", "Google Search", "Pay per click"];
+
+    let leadSource;
+    if (options.includes(data.lead_source)) {
+      leadSource = data.lead_source;
+    } else if (!options.includes(data.lead_source) && data.lead_source !== "") {
+      leadSource = "Others";
+    } else {
+      leadSource = "";
+    }
+
     this.setState({
       name: data.name,
       email: data.email,
@@ -106,7 +119,10 @@ class EditTable extends React.Component {
       source: data.source,
       form_type: data.form_type,
       form_type_id: data.form_type_id,
-      lead_source: data.lead_source,
+      lead_source: leadSource,
+      lead_source_other: !options.includes(data.lead_source)
+        ? data.lead_source
+        : "",
       has_been_contacted: data.has_been_contacted,
       profit: data.profit,
       last_edit: data.last_edit,
@@ -145,6 +161,7 @@ class EditTable extends React.Component {
       form_type,
       form_type_id,
       lead_source,
+      lead_source_other,
       has_been_contacted,
       profit,
       manual_add,
@@ -211,6 +228,15 @@ class EditTable extends React.Component {
                     ]}
                     onChange={this.onSelectInputChange}
                   />
+                  {lead_source === "Others" && (
+                    <TextFieldGroup
+                      name="lead_source_other"
+                      label="Please specify the source of lead."
+                      value={lead_source_other}
+                      onChange={this.onInputChange}
+                      placeholder="Please specify here"
+                    />
+                  )}
                 </TabPanel>
                 <TabPanel>
                   {parseInt(manual_add) ? (

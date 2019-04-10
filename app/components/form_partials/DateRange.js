@@ -107,6 +107,6 @@ DateRange.defaultProps = {
 };
 
 export default connect(
-  () => {},
+  null,
   { filterLeads, resetFilter }
 )(DateRange);
