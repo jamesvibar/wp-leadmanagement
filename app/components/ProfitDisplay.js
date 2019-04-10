@@ -3,14 +3,17 @@ import styled from "styled-components";
 import NumberFormat from "react-number-format";
 import { connect } from "react-redux";
 
-const ProfitDisplay = ({ filtered }) => {
+const ProfitDisplay = ({ filtered, filteredLeads }) => {
   return (
     filtered && (
       <TextContainer>
         <Text>
           Total:{" "}
           <NumberFormat
-            value="100"
+            value={filteredLeads.reduce(
+              (acc, lead) => acc + parseInt(lead.profit),
+              0
+            )}
             displayType={"text"}
             thousandSeparator={true}
             prefix={"$"}
@@ -33,6 +36,7 @@ const TextContainer = styled.div`
 `;
 
 const mapStateToProps = state => ({
+  filteredLeads: state.leads.filteredLeads,
   filtered: state.leads.filtered
 });
 

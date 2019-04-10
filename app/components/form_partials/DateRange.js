@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import addDays from "date-fns/addDays";
 import isAfter from "date-fns/isAfter";
 
-const DateRange = ({ filterLeads, resetFilter, filteredLeads }) => {
+const DateRange = ({ filterLeads, resetFilter }) => {
   const [fromToDate, setfromToDate] = useState({
     startDate: undefined,
     endDate: undefined
@@ -49,6 +49,8 @@ const DateRange = ({ filterLeads, resetFilter, filteredLeads }) => {
     <div style={DatePickerContainerStyles}>
       <p style={{ marginRight: "10px" }}>From Date</p>
       <DatePicker
+        dateFormat="MMMM d, yyyy"
+        todayButton={"Today"}
         selected={fromToDate.startDate}
         selectsStart
         startDate={fromToDate.startDate}
@@ -57,6 +59,8 @@ const DateRange = ({ filterLeads, resetFilter, filteredLeads }) => {
       />
       <p style={{ margin: "0 10px" }}>To Date</p>
       <DatePicker
+        dateFormat="MMMM d, yyyy"
+        todayButton={"Today"}
         selected={fromToDate.endDate}
         selectsEnd
         startDate={fromToDate.startDate}
@@ -95,19 +99,14 @@ const DatePickerContainerStyles = {
 
 DateRange.propTypes = {
   filterLeads: PropTypes.func.isRequired,
-  resetFilter: PropTypes.func.isRequired,
-  filteredLeads: PropTypes.array
+  resetFilter: PropTypes.func.isRequired
 };
 
 DateRange.defaultProps = {
   filteredLeads: []
 };
 
-const mapStateToProps = state => ({
-  filteredLeads: state.leads.filteredLeads
-});
-
 export default connect(
-  mapStateToProps,
+  () => {},
   { filterLeads, resetFilter }
 )(DateRange);
