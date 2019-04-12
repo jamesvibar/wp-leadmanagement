@@ -1,5 +1,17 @@
 # wp-leadmanagement
 
+<!-- TOC -->
+## Table of Conents
+
+- [wp-leadmanagement](#wp-leadmanagement)
+  - [Todos](#todos)
+  - [Setup and installation](#setup-and-installation)
+  - [Folder Structure](#folder-structure)
+  - [Usage](#usage)
+  - [Deployment](#deployment)
+  - [Credits](#credits)
+<!-- /TOC -->
+
 _wp-leadmanagement_ is a WordPress plugin that adds a Lead Management page in your WordPress dashboard. It allows you to monitor your contact submissions or leads in a convenient user interface. The plugin allows the user to create, update, and delete leads.
 
 Only submissions that are created from the plugin is editable. Meaning that submissions from the website's contact form cannot be edited to prevent false data.
@@ -12,17 +24,6 @@ Currently, leads are read from the **wp-database-emails** table. There are futur
 
 - [x] Prevent unauthorized access to leads endpoint with WordPress NONCE
 - [ ] Create settings page (Add tables and configure columns).
-
-<!-- TOC -->
-
-- [wp-leadmanagement](#wp-leadmanagement)
-  - [Todos](#todos)
-  - [Setup and installation](#setup-and-installation)
-  - [Folder Structure](#folder-structure)
-  - [Usage](#usage)
-  - [Credits](#credits)
-
-<!-- /TOC -->
 
 ## Setup and installation
 
@@ -69,7 +70,16 @@ webpack.config.js           # Webpack Bundler configuration file.
 wpr-leads.php               # Main PHP file. Runs initialization code and initializes code.
 ```
 
+## Deployment
+
+To deploy, build the production ready assets with `yarn prod` (if using yarn) or `npm run prod`. The generated assets can be found inside the `assets/js` folder. The files that you need to upload are:
+
+- /assets
+- /includes
+- uninstall.php
+- wpr-leads.php
+
 ## Credits
 
-_Made by [James Vibar](www.jamesvibar.com)_
+_Made by [James Vibar](www.jamesvibar.com) for Redkite PH_
 Test GPG key commit 3
