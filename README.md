@@ -82,4 +82,3 @@ To deploy, build the production ready assets with `yarn prod` (if using yarn) or
 ## Credits
 
 _Made by [James Vibar](www.jamesvibar.com) for Redkite PH_
-Test GPG key commit 3
