@@ -45,7 +45,7 @@
     "react-table": "^6.9.2",
     "react-tabs": "^3.0.0",
     "react-toastify": "^5.0.0",
-    "react-transition-group": "^2.8.0",
+    "react-transition-group": "^3.0.0",
     "reactjs-popup": "^1.3.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
