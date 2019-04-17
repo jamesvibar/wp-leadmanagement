@@ -6,8 +6,8 @@
 - [wp-leadmanagement](#wp-leadmanagement)
   - [Todos](#todos)
   - [Setup and installation](#setup-and-installation)
-  - [Folder Structure](#folder-structure)
   - [Usage](#usage)
+  - [Folder Structure](#folder-structure)
   - [Deployment](#deployment)
   - [Credits](#credits)
 <!-- /TOC -->
@@ -33,6 +33,7 @@ Currently, leads are read from the **wp-database-emails** table. There are futur
 ## Usage
 
 - Install required modules: `yarn` (or `npm install`)
+- Add example table `wp-database-emails.sample.sql` to your wordpress database.
 - Build development version of app and watch for changes: `yarn build` (or `npm run build`)
 - Build production version of app:`yarn prod` (or `npm run prod`)
 
