@@ -49,7 +49,7 @@
     "reactjs-popup": "^1.3.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.4.3",
