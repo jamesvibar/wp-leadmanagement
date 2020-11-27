@@ -3831,10 +3831,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-moment@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.9.0.tgz#25aefe0b612fe11e83f9c4be6db3b1b54e04f3c9"
-  integrity sha512-mtgBBoi+uqSpIay97TDFaW86va1M2RE7tGsTqFKH5v3WnpGmJAhUxDIXKdRO31wGF/H4KUi3vxhyjzO8GtvMKA==
+react-moment@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-1.0.0.tgz#aedac867cd08739065799de9452c898d954ba6d7"
+  integrity sha512-J4iIiwUT4oZcL7cp2U7naQKbQtqvmzGXXBMg/DLj+Pi7n9EW0VhBRx/1aJ1Tp2poCqTCAPoadLEoUIkReGnNNg==
 
 react-number-format@^4.0.7:
   version "4.0.7"
