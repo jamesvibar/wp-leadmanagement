@@ -711,7 +711,7 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@^7.4.2", "@babel/runtime@^7.4.3":
+"@babel/runtime@^7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.3.tgz#79888e452034223ad9609187a0ad1fe0d2ad4bdc"
   integrity sha512-9lsJwJLxDh/T3Q3SZszfWOTkk3pHbkmH+3KY+zwIDmsNlxsumuhS2TH3NIpktU4kNvfzy+k3eLT7aTJSPTo0OA==
@@ -1507,7 +1507,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.0, classnames@^2.2.5, classnames@^2.2.6:
+classnames@^2.2.0, classnames@^2.2.5:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -1539,6 +1539,11 @@ cliui@^4.0.0:
     string-width "^2.1.1"
     strip-ansi "^4.0.0"
     wrap-ansi "^2.0.0"
+
+clsx@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 code-point-at@^1.0.0:
   version "1.1.0"
@@ -3929,15 +3934,12 @@ react-tabs@^3.0.0:
     classnames "^2.2.0"
     prop-types "^15.5.0"
 
-react-toastify@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-5.0.0.tgz#bc59709fe6b56df4326c092dbf705d2c1957de22"
-  integrity sha512-gu2c7ipGMRnIjQ2Tu2haZdhKKSGXpSK5krUSIC+UdEA5cAfORQziQaYaQRKo7MFuSYDvQNo1NOV90jiEhaosDg==
+react-toastify@^7.0.0:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-7.0.3.tgz#93804c777ecf918872ba3b5be9c654db14547f85"
+  integrity sha512-cxZ5rfurC8LzcZQMTYc8RHIkQTs+BFur18Pzk6Loz6uS8OXUWm6nXVlH/wqglz4Z7UAE8xxcF5mRjfE13487uQ==
   dependencies:
-    "@babel/runtime" "^7.4.2"
-    classnames "^2.2.6"
-    prop-types "^15.7.2"
-    react-transition-group "^2.6.1"
+    clsx "^1.1.1"
 
 react-transition-group@^2.2.1:
   version "2.7.0"
@@ -3945,16 +3947,6 @@ react-transition-group@^2.2.1:
   integrity sha512-CzF22K0x6arjQO4AxkasMaiYcFG/QH0MhPNs45FmNsfWsQmsO9jv52sIZJAalnlryD5RgrrbLtV5CMJSokrrMA==
   dependencies:
     dom-helpers "^3.3.1"
-    loose-envify "^1.4.0"
-    prop-types "^15.6.2"
-    react-lifecycles-compat "^3.0.4"
-
-react-transition-group@^2.6.1:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.9.0.tgz#df9cdb025796211151a436c69a8f3b97b5b07c8d"
-  integrity sha512-+HzNTCHpeQyl4MJ/bdE0u6XRMe9+XG/+aL4mCxVN4DnPBQ0/5bfHWPDuOZUzYdMj94daZaZdCCc1Dzt9R/xSSg==
-  dependencies:
-    dom-helpers "^3.4.0"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
