@@ -3832,9 +3832,9 @@ react-lifecycles-compat@^3.0.4:
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
 react-moment@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.9.0.tgz#25aefe0b612fe11e83f9c4be6db3b1b54e04f3c9"
-  integrity sha512-mtgBBoi+uqSpIay97TDFaW86va1M2RE7tGsTqFKH5v3WnpGmJAhUxDIXKdRO31wGF/H4KUi3vxhyjzO8GtvMKA==
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.9.7.tgz#ca570466595b1aa4f7619e62da18b3bb2de8b6f3"
+  integrity sha512-ifzUrUGF6KRsUN2pRG5k56kO0mJBr8kRkWb0wNvtFIsBIxOuPxhUpL1YlXwpbQCbHq23hUu6A0VEk64HsFxk9g==
 
 react-number-format@^4.0.7:
   version "4.0.7"
